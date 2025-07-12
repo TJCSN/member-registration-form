@@ -1,234 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SeaHawk ROI Registration</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 30px;
-      max-width: 800px;
-      font-size: 20px;
+<select id="FullName" name="FullName" onchange="loadUserData()" required>
+  <option value="">-- Select Name --</option>
+  {% for name in names %}
+    <option value="{{ name }}">{{ name }}</option>
+  {% endfor %}
+</select>
+
+<!-- Add other input fields here -->
+
+<script>
+function loadUserData() {
+  const name = document.getElementById('FullName').value;
+  fetch('/get_user', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name })
+  })
+  .then(res => res.json())
+  .then(data => {
+    for (const key in data) {
+      const field = document.getElementById(key);
+      if (field) field.value = data[key];
     }
+  });
+}
 
-    h1 {
-      color: #004080;
-      font-size: 38px;
-    }
+document.querySelector('form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const formData = {};
+  document.querySelectorAll('input, select, textarea').forEach(el => {
+    formData[el.name] = el.value;
+  });
 
-    h2 {
-      font-size: 26px;
-      margin-bottom: 20px;
-    }
-
-    label {
-      font-weight: bold;
-      font-size: 20px;
-      display: block;
-      margin-top: 14px;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 14px;
-      font-size: 19px;
-      margin-bottom: 18px;
-      border: 1px solid #888;
-      border-radius: 6px;
-      box-sizing: border-box;
-    }
-
-    textarea {
-      resize: vertical;
-    }
-
-    button, input[type="submit"] {
-      padding: 14px 28px;
-      font-size: 18px;
-      cursor: pointer;
-      background-color: #004080;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      margin-top: 16px;
-    }
-
-    button:hover, input[type="submit"]:hover {
-      background-color: #0059b3;
-    }
-
-    .form-buttons {
-      display: flex;
-      gap: 12px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-
-    .section {
-      margin-top: 30px;
-      border-top: 1px solid #ccc;
-      padding-top: 20px;
-    }
-
-    @media (max-width: 600px) {
-      body {
-        margin: 16px;
-        font-size: 18px;
-      }
-
-      h1 {
-        font-size: 30px;
-      }
-
-      h2 {
-        font-size: 22px;
-      }
-
-      label {
-        font-size: 18px;
-      }
-
-      input, select, textarea {
-        font-size: 18px;
-        padding: 12px;
-      }
-
-      button, input[type="submit"] {
-        font-size: 16px;
-        padding: 12px 20px;
-      }
-    }
-  </style>
-  <script>
-    function goToPage2() {
-      document.getElementById('page1').style.display = 'none';
-      document.getElementById('page2').style.display = 'block';
-    }
-
-    function goToPage1() {
-      document.getElementById('page2').style.display = 'none';
-      document.getElementById('page1').style.display = 'block';
-    }
-
-    function showConfirmation() {
-      alert("Please screen shot for your reference.");
-    }
-  </script>
-</head>
-<body>
-  <h1>SeaHawk ROI</h1>
-  <h2>Race 2025 Registration Form</h2>
-
-  <form method="POST" action="/" onsubmit="showConfirmation()">
-    <!-- Page 1 -->
-    <div id="page1">
-      <label for="FullName">Select Your Name (as per NRIC):</label>
-      <select id="FullName" name="FullName" required>
-        <option value="">-- Select Name --</option>
-        <option>Heng Li Huat</option>
-        <option>Zhang Huihui</option>
-        <option>Rachel Chua Hwee Keow</option>
-        <!-- Add more names as needed -->
-      </select>
-
-      <label for="Email">Email Address:</label>
-      <input type="email" id="Email" name="Email" required>
-
-      <label for="Gender">Gender:</label>
-      <select id="Gender" name="Gender" required>
-        <option value="">-- Select Gender --</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-      </select>
-
-      <label for="Nationality">Nationality:</label>
-      <input type="text" id="Nationality" name="Nationality" required>
-
-      <label for="Race">Race:</label>
-      <input type="text" id="Race" name="Race" required>
-
-      <label for="DOB">Date of Birth:</label>
-      <input type="date" id="DOB" name="DOB" required>
-
-      <label for="Age">Age:</label>
-      <input type="number" id="Age" name="Age" min="0" required>
-
-      <label for="Category">Category:</label>
-      <select id="Category" name="Category" required>
-        <option value="">-- Select Category --</option>
-        <option value="Master">Master</option>
-        <option value="Senior">Senior</option>
-        <option value="Premier">Premier</option>
-      </select>
-
-      <div class="form-buttons">
-        <button type="button" onclick="goToPage2()">Next</button>
-      </div>
-    </div>
-
-    <!-- Page 2 -->
-    <div id="page2" style="display:none;">
-      <label for="ContactNumber">Contact Number:</label>
-      <input type="tel" id="ContactNumber" name="ContactNumber" required>
-
-      <label for="RowingSide">Rowing Side:</label>
-      <select id="RowingSide" name="RowingSide" required>
-        <option value="">-- Select Side --</option>
-        <option value="Left">Left</option>
-        <option value="Right">Right</option>
-        <option value="Both">Both</option>
-      </select>
-
-      <label for="Weight">Weight (kg):</label>
-      <input type="number" id="Weight" name="Weight" step="0.1" required>
-
-      <label for="JerseySize">Jersey Size:</label>
-      <select id="JerseySize" name="JerseySize" required>
-        <option value="">-- Select Size --</option>
-        <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option>
-      </select>
-
-      <label for="SDBACard">SDBA athlete card number:</label>
-      <input type="text" id="SDBACard" name="SDBACard">
-
-      <label for="Helms">Certified Helms:</label>
-      <select id="Helms" name="Helms">
-        <option value="">-- Select Option --</option>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-      </select>
-
-      <label for="CoachCert">Certified Coach: R1 / L1 / L2 / L3</label>
-      <input type="text" id="CoachCert" name="CoachCert">
-
-      <label for="SwimAbility">Can you swim? (with PFD):</label>
-      <select id="SwimAbility" name="SwimAbility">
-        <option value="">-- Select --</option>
-        <option value="Yes">Yes</option>
-        <option value="No">No</option>
-      </select>
-
-      <label for="MedicalHistory">Medical History:</label>
-      <textarea id="MedicalHistory" name="MedicalHistory" rows="4"></textarea>
-
-      <div class="section">
-        <h3>Emergency Contact</h3>
-        <label for="ECName">Name:</label>
-        <input type="text" id="ECName" name="ECName">
-
-        <label for="ECRelationship">Relationship:</label>
-        <input type="text" id="ECRelationship" name="ECRelationship">
-
-        <label for="ECContact">Contact Number:</label>
-        <input type="tel" id="ECContact" name="ECContact">
-      </div>
-
-      <div class="form-buttons">
-        <button type="button" onclick="goToPage1()">Back</button>
-        <input type="submit" value="Submit">
-      </div>
-    </div>
-  </form>
-</body>
-</html>
+  fetch('/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData)
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert("Information saved successfully!");
+  });
+});
+</script>
