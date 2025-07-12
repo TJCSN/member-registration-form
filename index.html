@@ -1,156 +1,167 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>SeaHawk ROI Registration</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            max-width: 800px;
-        }
-        h1 {
-            color: #004080;
-            font-size: 32px;
-        }
-        h2 {
-            margin-top: 0;
-        }
-        label {
-            font-weight: bold;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 6px;
-            margin-bottom: 12px;
-        }
-        .section {
-            margin-top: 30px;
-            border-top: 1px solid #ccc;
-            padding-top: 20px;
-        }
-        .form-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-    </style>
-    <script>
-        function showConfirmation() {
-            alert("Please screen shot");
-        }
-    </script>
+  <title>SeaHawk ROI Registration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      max-width: 800px;
+    }
+    h1 {
+      color: #004080;
+      font-size: 32px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 6px;
+      margin-bottom: 12px;
+    }
+    .section {
+      margin-top: 30px;
+      border-top: 1px solid #ccc;
+      padding-top: 20px;
+    }
+    .form-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+  </style>
+  <script>
+    function goToPage2() {
+      document.getElementById('page1').style.display = 'none';
+      document.getElementById('page2').style.display = 'block';
+    }
+
+    function goToPage1() {
+      document.getElementById('page2').style.display = 'none';
+      document.getElementById('page1').style.display = 'block';
+    }
+
+    function showConfirmation() {
+      alert("Please screen shot");
+    }
+  </script>
 </head>
 <body>
-    <h1>SeaHawk ROI</h1>
-    <h2>Race 2025 Registration Form</h2>
+  <h1>SeaHawk ROI</h1>
+  <h2>Race 2025 Registration Form</h2>
 
-    <form method="POST" action="/" onsubmit="showConfirmation()">
-        <label for="FullName">Select Your Name (as per NRIC):</label>
-        <select id="FullName" name="FullName" required>
-            <option value="">-- Select Name --</option>
-            {% for name in [
-                'Heng Li Huat', 'zhang Huihui', 'Rachel Chua Hwee Keow', 'Kang Bao Qiang',
-                'Wang Bei（王蓓）', 'Soh Poh Hock Anderson', 'Norman Lin Guo Liang', 'Pradip Singh',
-                'Koh Leong Nigel', 'lim gek yang', 'Jiang Xi', 'Lee Gin Cassidy',
-                'BALASUBRAMANIAM S/O  Muthu Nallayan', 'Sng Thong Hock', 'Toh Hao Xiang',
-                'LOW SHENG LONG (SEAN)', 'Neo Yun Chuen', 'Tan Li Chew Venessa',
-                'Ang Hui Loon (Jamie)', 'Lim Wei Teng (Lin WeiTing)', 'RANDY TAN HONG LIANG'
-            ] %}
-                <option value="{{ name }}" {% if data.get('FullName') == name %}selected{% endif %}>{{ name }}</option>
-            {% endfor %}
-        </select>
+  <form method="POST" action="/" onsubmit="showConfirmation()">
 
-        <div class="form-buttons">
-            <button type="submit" name="load">Load Info</button>
-            <input type="submit" value="Submit">
-        </div>
+    <!-- Page 1 -->
+    <div id="page1">
+      <label for="FullName">Select Your Name (as per NRIC):</label>
+      <select id="FullName" name="FullName" required>
+        <option value="">-- Select Name --</option>
+        <option>Heng Li Huat</option>
+        <option>zhang Huihui</option>
+        <option>Rachel Chua Hwee Keow</option>
+        <!-- Add more names here -->
+      </select>
 
-        <label for="Email">Email Address:</label>
-        <input type="email" id="Email" name="Email" value="{{ data.get('Email', '') }}" required>
+      <label for="Email">Email Address:</label>
+      <input type="email" id="Email" name="Email" required>
 
-        <label for="Gender">Gender:</label>
-        <select id="Gender" name="Gender" required>
-            <option value="">-- Select Gender --</option>
-            <option value="Male" {% if data.get('Gender') == 'Male' %}selected{% endif %}>Male</option>
-            <option value="Female" {% if data.get('Gender') == 'Female' %}selected{% endif %}>Female</option>
-        </select>
+      <label for="Gender">Gender:</label>
+      <select id="Gender" name="Gender" required>
+        <option value="">-- Select Gender --</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
 
-        <label for="Nationality">Nationality:</label>
-        <input type="text" id="Nationality" name="Nationality" value="{{ data.get('Nationality', '') }}" required>
+      <label for="Nationality">Nationality:</label>
+      <input type="text" id="Nationality" name="Nationality" required>
 
-        <label for="Race">Race:</label>
-        <input type="text" id="Race" name="Race" value="{{ data.get('Race', '') }}" required>
+      <label for="Race">Race:</label>
+      <input type="text" id="Race" name="Race" required>
 
-        <label for="DOB">Date of Birth:</label>
-        <input type="date" id="DOB" name="DOB" value="{{ data.get('DOB', '') }}" required>
+      <label for="DOB">Date of Birth:</label>
+      <input type="date" id="DOB" name="DOB" required>
 
-        <label for="Age">Age:</label>
-        <input type="number" id="Age" name="Age" min="0" value="{{ data.get('Age', '') }}" required>
+      <label for="Age">Age:</label>
+      <input type="number" id="Age" name="Age" min="0" required>
 
-        <label for="Category">Category:</label>
-        <select id="Category" name="Category" required>
-            <option value="">-- Select Category --</option>
-            <option value="Master" {% if data.get('Category') == 'Master' %}selected{% endif %}>Master</option>
-            <option value="Senior" {% if data.get('Category') == 'Senior' %}selected{% endif %}>Senior</option>
-            <option value="Premier" {% if data.get('Category') == 'Premier' %}selected{% endif %}>Premier</option>
-        </select>
+      <label for="Category">Category:</label>
+      <select id="Category" name="Category" required>
+        <option value="">-- Select Category --</option>
+        <option value="Master">Master</option>
+        <option value="Senior">Senior</option>
+        <option value="Premier">Premier</option>
+      </select>
 
-        <label for="ContactNumber">Contact Number:</label>
-        <input type="tel" id="ContactNumber" name="ContactNumber" value="{{ data.get('ContactNumber', '') }}" required>
+      <div class="form-buttons">
+        <button type="button" onclick="goToPage2()">Next</button>
+      </div>
+    </div>
 
-        <label for="RowingSide">Rowing Side:</label>
-        <select id="RowingSide" name="RowingSide" required>
-            <option value="">-- Select Side --</option>
-            <option value="Left" {% if data.get('RowingSide') == 'Left' %}selected{% endif %}>Left</option>
-            <option value="Right" {% if data.get('RowingSide') == 'Right' %}selected{% endif %}>Right</option>
-            <option value="Both" {% if data.get('RowingSide') == 'Both' %}selected{% endif %}>Both</option>
-        </select>
+    <!-- Page 2 -->
+    <div id="page2" style="display:none;">
+      <label for="ContactNumber">Contact Number:</label>
+      <input type="tel" id="ContactNumber" name="ContactNumber" required>
 
-        <label for="Weight">Weight (kg):</label>
-        <input type="number" id="Weight" name="Weight" step="0.1" value="{{ data.get('Weight', '') }}" required>
+      <label for="RowingSide">Rowing Side:</label>
+      <select id="RowingSide" name="RowingSide" required>
+        <option value="">-- Select Side --</option>
+        <option value="Left">Left</option>
+        <option value="Right">Right</option>
+        <option value="Both">Both</option>
+      </select>
 
-        <label for="JerseySize">Jersey Size:</label>
-        <select id="JerseySize" name="JerseySize" required>
-            <option value="">-- Select Size --</option>
-            {% for size in ['XS', 'S', 'M', 'L', 'XL'] %}
-                <option value="{{ size }}" {% if data.get('JerseySize') == size %}selected{% endif %}>{{ size }}</option>
-            {% endfor %}
-        </select>
+      <label for="Weight">Weight (kg):</label>
+      <input type="number" id="Weight" name="Weight" step="0.1" required>
 
-        <label for="SDBACard">SDBA athlete card number:</label>
-        <input type="text" id="SDBACard" name="SDBACard" value="{{ data.get('SDBACard', '') }}">
+      <label for="JerseySize">Jersey Size:</label>
+      <select id="JerseySize" name="JerseySize" required>
+        <option value="">-- Select Size --</option>
+        <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option>
+      </select>
 
-        <label for="Helms">Certified Helms:</label>
-        <select id="Helms" name="Helms">
-            <option value="">-- Select Option --</option>
-            <option value="Yes" {% if data.get('Helms') == 'Yes' %}selected{% endif %}>Yes</option>
-            <option value="No" {% if data.get('Helms') == 'No' %}selected{% endif %}>No</option>
-        </select>
+      <label for="SDBACard">SDBA athlete card number:</label>
+      <input type="text" id="SDBACard" name="SDBACard">
 
-        <label for="CoachCert">Certified Coach: R1 / L1 / L2 / L3</label>
-        <input type="text" id="CoachCert" name="CoachCert" value="{{ data.get('CoachCert', '') }}">
+      <label for="Helms">Certified Helms:</label>
+      <select id="Helms" name="Helms">
+        <option value="">-- Select Option --</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
 
-        <label for="SwimAbility">Can you swim? (with Personal Floatation Device):</label>
-        <select id="SwimAbility" name="SwimAbility">
-            <option value="">-- Select --</option>
-            <option value="Yes" {% if data.get('SwimAbility') == 'Yes' %}selected{% endif %}>Yes</option>
-            <option value="No" {% if data.get('SwimAbility') == 'No' %}selected{% endif %}>No</option>
-        </select>
+      <label for="CoachCert">Certified Coach: R1 / L1 / L2 / L3</label>
+      <input type="text" id="CoachCert" name="CoachCert">
 
-        <label for="MedicalHistory">Medical History:</label>
-        <textarea id="MedicalHistory" name="MedicalHistory" rows="3">{{ data.get('MedicalHistory', '') }}</textarea>
+      <label for="SwimAbility">Can you swim? (with PFD):</label>
+      <select id="SwimAbility" name="SwimAbility">
+        <option value="">-- Select --</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
 
-        <div class="section">
-            <h3>Emergency Contact</h3>
-            <label for="ECName">Name:</label>
-            <input type="text" id="ECName" name="ECName" value="{{ data.get('ECName', '') }}">
+      <label for="MedicalHistory">Medical History:</label>
+      <textarea id="MedicalHistory" name="MedicalHistory" rows="3"></textarea>
 
-            <label for="ECRelationship">Relationship:</label>
-            <input type="text" id="ECRelationship" name="ECRelationship" value="{{ data.get('ECRelationship', '') }}">
+      <div class="section">
+        <h3>Emergency Contact</h3>
+        <label for="ECName">Name:</label>
+        <input type="text" id="ECName" name="ECName">
 
-            <label for="ECContact">Contact Number:</label>
-            <input type="tel" id="ECContact" name="ECContact" value="{{ data.get('ECContact', '') }}">
-        </div>
-    </form>
+        <label for="ECRelationship">Relationship:</label>
+        <input type="text" id="ECRelationship" name="ECRelationship">
+
+        <label for="ECContact">Contact Number:</label>
+        <input type="tel" id="ECContact" name="ECContact">
+      </div>
+
+      <div class="form-buttons">
+        <button type="button" onclick="goToPage1()">Back</button>
+        <input type="submit" value="Submit">
+      </div>
+    </div>
+  </form>
 </body>
 </html>
