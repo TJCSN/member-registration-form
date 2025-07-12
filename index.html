@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SeaHawk ROI Registration</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 40px;
+      margin: 30px;
       max-width: 800px;
-      font-size: 20px; /* Larger base font */
+      font-size: 20px;
     }
 
     h1 {
@@ -24,16 +26,17 @@
       font-weight: bold;
       font-size: 20px;
       display: block;
-      margin-top: 12px;
+      margin-top: 14px;
     }
 
     input, select, textarea {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       font-size: 19px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       border: 1px solid #888;
       border-radius: 6px;
+      box-sizing: border-box;
     }
 
     textarea {
@@ -48,6 +51,7 @@
       color: white;
       border: none;
       border-radius: 6px;
+      margin-top: 16px;
     }
 
     button:hover, input[type="submit"]:hover {
@@ -58,12 +62,42 @@
       display: flex;
       gap: 12px;
       margin-top: 20px;
+      flex-wrap: wrap;
     }
 
     .section {
       margin-top: 30px;
       border-top: 1px solid #ccc;
       padding-top: 20px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        margin: 16px;
+        font-size: 18px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+
+      label {
+        font-size: 18px;
+      }
+
+      input, select, textarea {
+        font-size: 18px;
+        padding: 12px;
+      }
+
+      button, input[type="submit"] {
+        font-size: 16px;
+        padding: 12px 20px;
+      }
     }
   </style>
   <script>
@@ -87,7 +121,6 @@
   <h2>Race 2025 Registration Form</h2>
 
   <form method="POST" action="/" onsubmit="showConfirmation()">
-
     <!-- Page 1 -->
     <div id="page1">
       <label for="FullName">Select Your Name (as per NRIC):</label>
@@ -96,7 +129,7 @@
         <option>Heng Li Huat</option>
         <option>Zhang Huihui</option>
         <option>Rachel Chua Hwee Keow</option>
-        <!-- add more names as needed -->
+        <!-- Add more names as needed -->
       </select>
 
       <label for="Email">Email Address:</label>
