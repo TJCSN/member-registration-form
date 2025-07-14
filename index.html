@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SeaHawk ROI Registration</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SeaHawk Member Registration</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -11,24 +11,20 @@
       max-width: 800px;
       font-size: 20px;
     }
-
     h1 {
       color: #004080;
       font-size: 38px;
     }
-
     h2 {
       font-size: 26px;
       margin-bottom: 20px;
     }
-
     label {
       font-weight: bold;
       font-size: 20px;
       display: block;
       margin-top: 14px;
     }
-
     input, select, textarea {
       width: 100%;
       padding: 14px;
@@ -38,11 +34,9 @@
       border-radius: 6px;
       box-sizing: border-box;
     }
-
     textarea {
       resize: vertical;
     }
-
     button, input[type="submit"] {
       padding: 14px 28px;
       font-size: 18px;
@@ -53,62 +47,56 @@
       border-radius: 6px;
       margin-top: 16px;
     }
-
     button:hover, input[type="submit"]:hover {
       background-color: #0059b3;
     }
-
     .form-buttons {
       display: flex;
       gap: 12px;
       margin-top: 20px;
       flex-wrap: wrap;
     }
-
     .section {
       margin-top: 30px;
       border-top: 1px solid #ccc;
       padding-top: 20px;
     }
-
-    @media (max-width: 600px) {
-      body {
-        margin: 16px;
-        font-size: 18px;
-      }
-
-      h1 {
-        font-size: 30px;
-      }
-
-      h2 {
-        font-size: 22px;
-      }
-
-      label {
-        font-size: 18px;
-      }
-
-      input, select, textarea {
-        font-size: 18px;
-        padding: 12px;
-      }
-
-      button, input[type="submit"] {
-        font-size: 16px;
-        padding: 12px 20px;
-      }
+    .hidden {
+      display: none;
     }
   </style>
   <script>
-    function goToPage2() {
-      document.getElementById('page1').style.display = 'none';
-      document.getElementById('page2').style.display = 'block';
+    const registeredMembers = [
+      "Heng Li Huat",
+      "Zhang Huihui",
+      "Rachel Chua Hwee Keow"
+    ];
+
+    function startNewRegistration() {
+      document.getElementById("startPage").style.display = "none";
+      document.getElementById("memberRegistration").style.display = "block";
     }
 
-    function goToPage1() {
-      document.getElementById('page2').style.display = 'none';
-      document.getElementById('page1').style.display = 'block';
+    function showMemberLookup() {
+      document.getElementById("startPage").style.display = "none";
+      document.getElementById("memberCheck").style.display = "block";
+    }
+
+    function proceedAsExisting() {
+      const selectedName = document.getElementById("existingName").value;
+      if (registeredMembers.includes(selectedName)) {
+        document.getElementById("memberCheck").style.display = "none";
+        document.getElementById("raceRegistration").style.display = "block";
+      } else {
+        alert("Name not found. Please register as a new member.");
+      }
+    }
+
+    function backToStart() {
+      document.getElementById("startPage").style.display = "block";
+      document.getElementById("memberRegistration").style.display = "none";
+      document.getElementById("memberCheck").style.display = "none";
+      document.getElementById("raceRegistration").style.display = "none";
     }
 
     function showConfirmation() {
@@ -117,20 +105,21 @@
   </script>
 </head>
 <body>
-  <h1>SeaHawk ROI</h1>
-  <h2>Race 2025 Registration Form</h2>
+  <h1>SeaHawk Sports Club</h1>
+  <h2>Registration Form</h2>
 
   <form method="POST" action="/" onsubmit="showConfirmation()">
-    <!-- Page 1 -->
-    <div id="page1">
-      <label for="FullName">Select Your Name (as per NRIC):</label>
-      <select id="FullName" name="FullName" required>
-        <option value="">-- Select Name --</option>
-        <option>Heng Li Huat</option>
-        <option>Zhang Huihui</option>
-        <option>Rachel Chua Hwee Keow</option>
-        <!-- Add more names as needed -->
-      </select>
+
+    <!-- Start Page -->
+    <div id="startPage">
+      <button type="button" onclick="startNewRegistration()">New Registration</button>
+      <button type="button" onclick="showMemberLookup()">Check Your Name</button>
+    </div>
+
+    <!-- Member Registration -->
+    <div id="memberRegistration" class="hidden">
+      <label for="FullName">Full Name (as per NRIC):</label>
+      <input type="text" id="FullName" name="FullName" required>
 
       <label for="Email">Email Address:</label>
       <input type="email" id="Email" name="Email" required>
@@ -163,12 +152,32 @@
       </select>
 
       <div class="form-buttons">
-        <button type="button" onclick="goToPage2()">Next</button>
+        <button type="button" onclick="backToStart()">Back</button>
+        <button type="button" onclick="
+          document.getElementById('memberRegistration').style.display = 'none';
+          document.getElementById('raceRegistration').style.display = 'block';
+        ">Next</button>
       </div>
     </div>
 
-    <!-- Page 2 -->
-    <div id="page2" style="display:none;">
+    <!-- Member Check -->
+    <div id="memberCheck" class="hidden">
+      <label for="existingName">Select Your Name:</label>
+      <select id="existingName" required>
+        <option value="">-- Select Name --</option>
+        <option>Heng Li Huat</option>
+        <option>Zhang Huihui</option>
+        <option>Rachel Chua Hwee Keow</option>
+      </select>
+
+      <div class="form-buttons">
+        <button type="button" onclick="backToStart()">Back</button>
+        <button type="button" onclick="proceedAsExisting()">Proceed</button>
+      </div>
+    </div>
+
+    <!-- Race Registration -->
+    <div id="raceRegistration" class="hidden">
       <label for="ContactNumber">Contact Number:</label>
       <input type="tel" id="ContactNumber" name="ContactNumber" required>
 
@@ -186,7 +195,8 @@
       <label for="JerseySize">Jersey Size:</label>
       <select id="JerseySize" name="JerseySize" required>
         <option value="">-- Select Size --</option>
-        <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option>
+        <option>XS</option><option>S</option><option>M</option>
+        <option>L</option><option>XL</option>
       </select>
 
       <label for="SDBACard">SDBA athlete card number:</label>
@@ -225,10 +235,11 @@
       </div>
 
       <div class="form-buttons">
-        <button type="button" onclick="goToPage1()">Back</button>
+        <button type="button" onclick="backToStart()">Back</button>
         <input type="submit" value="Submit">
       </div>
     </div>
+
   </form>
 </body>
 </html>
