@@ -130,6 +130,5 @@ def submit_form():
     
     return f"✅ Thank you, {new_data['Name']}! You have successfully registered for {new_data['Race']}."
 
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=10000)
